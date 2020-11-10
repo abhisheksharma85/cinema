@@ -1,4 +1,4 @@
-package com.abhisheksharm.fourthwall.cimena;
+package com.abhisheksharma.fourthwall.cimena;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.abhisheksharm.fourthwall.cimena;
+package com.abhisheksharma.fourthwall.cimena;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
