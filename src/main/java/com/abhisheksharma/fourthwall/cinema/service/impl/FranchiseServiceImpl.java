@@ -5,7 +5,6 @@ import com.abhisheksharma.fourthwall.cinema.repository.FranchiseRepository;
 import com.abhisheksharma.fourthwall.cinema.service.FranchiseService;
 import com.abhisheksharma.fourthwall.cinema.service.dto.FranchiseDTO;
 import com.abhisheksharma.fourthwall.cinema.service.mapper.FranchiseMapper;
-import com.abhisheksharma.fourthwall.cinema.web.rest.FranchiseResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -42,7 +41,7 @@ public class FranchiseServiceImpl implements FranchiseService {
      */
     @Override
     public FranchiseDTO save(FranchiseDTO franchiseDTO) {
-        log.debug("Request to save ActionType : {}", franchiseDTO);
+        log.debug("Request to save Franchise : {}", franchiseDTO);
         Franchise franchise = franchiseMapper.toEntity(franchiseDTO);
         franchise.setCreatedAt(Instant.now());
         franchise = franchiseRepository.save(franchise);
@@ -51,14 +50,14 @@ public class FranchiseServiceImpl implements FranchiseService {
     }
 
     /**
-     * Get all the actionTypes.
+     * Get all the franchises.
      *
      * @return the list of entities
      */
     @Override
     @Transactional(readOnly = true)
     public List<FranchiseDTO> findAll() {
-        log.debug("Request to get all ActionTypes");
+        log.debug("Request to get all Franchises");
         return franchiseRepository.findAll().stream()
                 .map(franchiseMapper::toDto)
                 .collect(Collectors.toCollection(LinkedList::new));
