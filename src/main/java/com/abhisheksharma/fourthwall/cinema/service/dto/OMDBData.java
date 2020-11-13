@@ -3,7 +3,6 @@ package com.abhisheksharma.fourthwall.cinema.service.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
-import java.util.Map;
 
 public class OMDBData {
 
@@ -50,7 +49,7 @@ public class OMDBData {
     private String poster;
 
     @JsonProperty("Ratings")
-    private List<Rating> ratings;
+    private List<OMDBRating> ratings;
 
     @JsonProperty("Metascore")
     private String metascore;
@@ -86,7 +85,7 @@ public class OMDBData {
     public OMDBData() { }
 
     public OMDBData(String title, String year, String rated, String released, String runtime, String genre, String director, String writer, String actors, String plot,
-                    String language, String country, String awards, String poster, List<Rating> ratings, String metascore, String imdbRating, String imdbVotes,
+                    String language, String country, String awards, String poster, List<OMDBRating> ratings, String metascore, String imdbRating, String imdbVotes,
                     String imdbId, String type, String dvd, String boxOffice, String production, String website, String response) {
         this.title = title;
         this.year = year;
@@ -227,11 +226,11 @@ public class OMDBData {
         this.poster = poster;
     }
 
-    public List<Rating> getRatings() {
+    public List<OMDBRating> getRatings() {
         return ratings;
     }
 
-    public void setRatings(List<Rating> ratings) {
+    public void setRatings(List<OMDBRating> ratings) {
         this.ratings = ratings;
     }
 

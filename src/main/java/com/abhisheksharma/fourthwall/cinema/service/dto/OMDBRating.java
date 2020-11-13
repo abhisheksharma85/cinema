@@ -2,7 +2,7 @@ package com.abhisheksharma.fourthwall.cinema.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Rating {
+public class OMDBRating {
 
     @JsonProperty("Source")
     private String source;
@@ -10,9 +10,9 @@ public class Rating {
     @JsonProperty("Value")
     private String value;
 
-    public Rating(){}
+    public OMDBRating(){}
 
-    public Rating(String source, String value) {
+    public OMDBRating(String source, String value) {
         this.source = source;
         this.value = value;
     }
