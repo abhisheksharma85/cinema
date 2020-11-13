@@ -1,14 +1,23 @@
 package com.abhisheksharma.fourthwall.cinema.service.impl;
 
 
+import com.abhisheksharma.fourthwall.cinema.config.ApplicationProperties;
 import com.abhisheksharma.fourthwall.cinema.domain.Movie;
 import com.abhisheksharma.fourthwall.cinema.repository.MovieRepository;
 import com.abhisheksharma.fourthwall.cinema.service.MovieService;
+import com.abhisheksharma.fourthwall.cinema.service.dto.Message;
 import com.abhisheksharma.fourthwall.cinema.service.dto.MovieDTO;
+import com.abhisheksharma.fourthwall.cinema.service.dto.OMDBData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,10 +29,17 @@ public class MovieServiceImpl implements MovieService {
 
     private final Logger log = LoggerFactory.getLogger(FranchiseServiceImpl.class);
 
+    private final ApplicationProperties applicationProperties;
+
     private final MovieRepository movieRepository;
 
-    public MovieServiceImpl(MovieRepository movieRepository){
+    private final RestTemplate restTemplate;
+
+    public MovieServiceImpl(ApplicationProperties applicationProperties,
+                            MovieRepository movieRepository,RestTemplate restTemplate){
+        this.applicationProperties = applicationProperties;
         this.movieRepository = movieRepository;
+        this.restTemplate = restTemplate;
     }
 
 
@@ -54,6 +70,7 @@ public class MovieServiceImpl implements MovieService {
             System.out.println(movie);
         }
 
+        
 
         return null;
     }
