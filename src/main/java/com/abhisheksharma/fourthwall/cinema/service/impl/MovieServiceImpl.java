@@ -8,6 +8,7 @@ import com.abhisheksharma.fourthwall.cinema.service.MovieService;
 import com.abhisheksharma.fourthwall.cinema.service.dto.Message;
 import com.abhisheksharma.fourthwall.cinema.service.dto.MovieDTO;
 import com.abhisheksharma.fourthwall.cinema.service.dto.OMDBData;
+import com.abhisheksharma.fourthwall.cinema.service.mapper.MovieMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing Movie.
@@ -33,13 +36,16 @@ public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
 
+    private final MovieMapper movieMapper;
+
     private final RestTemplate restTemplate;
 
     public MovieServiceImpl(ApplicationProperties applicationProperties,
-                            MovieRepository movieRepository,RestTemplate restTemplate){
+                            MovieRepository movieRepository,RestTemplate restTemplate,MovieMapper movieMapper){
         this.applicationProperties = applicationProperties;
         this.movieRepository = movieRepository;
         this.restTemplate = restTemplate;
+        this.movieMapper = movieMapper;
     }
 
 
@@ -66,13 +72,9 @@ public class MovieServiceImpl implements MovieService {
     @Transactional(readOnly = true)
     public List<MovieDTO> findAll() {
         log.debug("Request to get all Movies");
-        for(Movie movie: movieRepository.findAll()){
-            System.out.println(movie);
-        }
-
-        
-
-        return null;
+        return movieRepository.findAll().stream()
+                .map(movieMapper::toDto)
+                .collect(Collectors.toCollection(LinkedList::new));
     }
 
 }

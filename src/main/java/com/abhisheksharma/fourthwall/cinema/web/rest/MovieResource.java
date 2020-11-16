@@ -33,6 +33,9 @@ public class MovieResource {
         this.movieService = movieService;
     }
 
+    /**
+     * Admin API /api/manage/...
+     */
 
     /**
      * GET  /movies : get all the movies.
@@ -50,4 +53,10 @@ public class MovieResource {
             return new ResponseEntity<>(movies, HttpStatus.NO_CONTENT);
         }
     }
+
+    /**
+     * User API
+     */
+
+
 }

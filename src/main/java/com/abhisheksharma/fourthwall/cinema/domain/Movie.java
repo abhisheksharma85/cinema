@@ -2,6 +2,7 @@ package com.abhisheksharma.fourthwall.cinema.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -10,7 +11,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "fw_cinema_movie")
-public class Movie {
+public class Movie implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
