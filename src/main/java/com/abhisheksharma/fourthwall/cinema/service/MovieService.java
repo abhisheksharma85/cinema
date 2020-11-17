@@ -6,7 +6,7 @@ import com.abhisheksharma.fourthwall.cinema.service.dto.MovieDTO;
 import java.util.List;
 
 /**
- * Service Interface for managing Franchise.
+ * Service Interface for managing Movie.
  */
 public interface MovieService {
 

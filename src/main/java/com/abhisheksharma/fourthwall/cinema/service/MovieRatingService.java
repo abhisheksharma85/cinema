@@ -27,5 +27,5 @@ public interface MovieRatingService {
      * @param movieId
      * @return the average rating value of a movie
      */
-    float findAvgRatingByMovie(Long movieId);
+    float findAvgStarRatingByMovie(Long movieId);
 }

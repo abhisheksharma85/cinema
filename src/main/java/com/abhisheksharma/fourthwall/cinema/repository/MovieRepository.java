@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     @Modifying
-    @Query("Update Movie m set m.rating = :rating where m.id = :id")
-    void updateRatingById(Long id, float rating);
+    @Query("Update Movie m set m.star = :star where m.id = :id")
+    void updateRatingById(Long id, float star);
 }

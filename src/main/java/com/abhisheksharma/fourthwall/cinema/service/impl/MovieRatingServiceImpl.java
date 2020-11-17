@@ -47,7 +47,7 @@ public class MovieRatingServiceImpl implements MovieRatingService {
         MovieRating movieRating = movieRatingMapper.toEntity(movieRatingDTO);
         movieRating = movieRatingRepository.save(movieRating);
         MovieRatingDTO result = movieRatingMapper.toDto(movieRating);
-        movieRepository.updateRatingById(movieRatingDTO.getMovieId(),findAvgRatingByMovie(movieRatingDTO.getMovieId()));
+        movieRepository.updateRatingById(movieRatingDTO.getMovieId(),findAvgStarRatingByMovie(movieRatingDTO.getMovieId()));
         return result;
     }
 
@@ -57,7 +57,7 @@ public class MovieRatingServiceImpl implements MovieRatingService {
     }
 
 
-    public float findAvgRatingByMovie(Long movieId){
+    public float findAvgStarRatingByMovie(Long movieId){
         log.debug("Request to get Average Rating of a movie: {}", movieId);
         return movieRatingRepository.getAverageStar(movieId);
     }

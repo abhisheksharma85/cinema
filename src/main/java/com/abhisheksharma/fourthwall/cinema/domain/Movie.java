@@ -48,12 +48,12 @@ public class Movie implements Serializable {
     private String imdbId;
 
     @Column(name = "user_rating_star")
-    private Float rating;
+    private Float star;
 
     public Movie(){}
 
     public Movie(Long id, @NotNull String name, Integer franchiseId, Instant releasedDate, Instant createdAt, Instant updatedAt, Long createdBy,
-                 Long updatedBy, @NotNull Boolean active, String imdbId) {
+                 Long updatedBy, @NotNull Boolean active, String imdbId,Float star) {
         this.id = id;
         this.name = name;
         this.franchiseId = franchiseId;
@@ -64,6 +64,7 @@ public class Movie implements Serializable {
         this.updatedBy = updatedBy;
         this.active = active;
         this.imdbId = imdbId;
+        this.star = star;
     }
 
     public Long getId() {
@@ -146,9 +147,9 @@ public class Movie implements Serializable {
         this.imdbId = imdbId;
     }
 
-    public Float getRating() { return rating; }
+    public Float getStar() { return star; }
 
-    public void setRating(Float rating) { this.rating = rating; }
+    public void setStar(Float star) { this.star = star; }
 
     @Override
     public boolean equals(Object o) {
@@ -170,7 +171,6 @@ public class Movie implements Serializable {
         return Objects.hashCode(getId());
     }
 
-
     @Override
     public String toString() {
         return "Movie{" +
@@ -184,6 +184,7 @@ public class Movie implements Serializable {
                 ", updatedBy=" + updatedBy +
                 ", active=" + active +
                 ", imdbId='" + imdbId + '\'' +
+                ", star=" + star +
                 '}';
     }
 }
