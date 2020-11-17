@@ -47,6 +47,9 @@ public class Movie implements Serializable {
     @Column(name = "imdb_id", nullable = false)
     private String imdbId;
 
+    @Column(name = "user_rating_star")
+    private Float rating;
+
     public Movie(){}
 
     public Movie(Long id, @NotNull String name, Integer franchiseId, Instant releasedDate, Instant createdAt, Instant updatedAt, Long createdBy,
@@ -142,6 +145,10 @@ public class Movie implements Serializable {
     public void setImdbId(String imdbId) {
         this.imdbId = imdbId;
     }
+
+    public Float getRating() { return rating; }
+
+    public void setRating(Float rating) { this.rating = rating; }
 
     @Override
     public boolean equals(Object o) {

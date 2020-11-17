@@ -14,6 +14,7 @@ public  class Constants {
     public static final String DEFAULT_COUNTRY = "US";
     public static final String DEFAULT_LANGUAGE = "en";
 
+    public static final Float MAX_RATING = 5.0f;
 
     public static class Source{
         public static final String  WEB      =   "web";
