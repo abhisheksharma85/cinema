@@ -10,7 +10,7 @@ import java.io.Serializable;
  * A UserProfile.
  */
 @Entity
-@Table(name = "spb_user_profile")
+@Table(name = "fw_cinema_user_profile")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class UserProfile implements Serializable {
 

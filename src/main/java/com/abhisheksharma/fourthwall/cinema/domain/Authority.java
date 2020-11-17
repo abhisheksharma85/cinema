@@ -1,7 +1,5 @@
 package com.abhisheksharma.fourthwall.cinema.domain;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +15,6 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "fw_cinema_authority")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Authority implements Serializable {
 
     private static final long serialVersionUID = 1L;
