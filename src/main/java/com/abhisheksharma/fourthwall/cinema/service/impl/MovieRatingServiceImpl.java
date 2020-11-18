@@ -13,8 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 /**
@@ -54,6 +56,13 @@ public class MovieRatingServiceImpl implements MovieRatingService {
     @Override
     public List<MovieRatingDTO> findAll() {
         return null;
+    }
+
+    @Override
+    public List<MovieRatingDTO> findByMovieId(Long movieId) {
+        return movieRatingRepository.findByMovieId(movieId).stream()
+                .map(movieRatingMapper::toDto)
+                .collect(Collectors.toCollection(LinkedList::new));
     }
 
 

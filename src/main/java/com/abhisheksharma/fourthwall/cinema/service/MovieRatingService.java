@@ -23,6 +23,13 @@ public interface MovieRatingService {
     List<MovieRatingDTO> findAll();
 
     /**
+     * Get all the movie-ratings by movie id.
+     *
+     * @return the list of entities
+     */
+    List<MovieRatingDTO> findByMovieId(Long movieId);
+
+    /**
      *
      * @param movieId
      * @return the average rating value of a movie

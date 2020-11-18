@@ -1,10 +1,12 @@
 package com.abhisheksharma.fourthwall.cinema.web.rest;
 
 
+
+import com.abhisheksharma.fourthwall.cinema.service.MovieRatingService;
 import com.abhisheksharma.fourthwall.cinema.service.MovieService;
-import com.abhisheksharma.fourthwall.cinema.service.dto.FranchiseDTO;
 import com.abhisheksharma.fourthwall.cinema.service.dto.MovieDTO;
 import com.abhisheksharma.fourthwall.cinema.service.dto.MovieDetailDTO;
+import com.abhisheksharma.fourthwall.cinema.service.dto.MovieRatingDTO;
 import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +33,11 @@ public class MovieResource {
 
     private final MovieService movieService;
 
-    public MovieResource(MovieService movieService){
+    private final MovieRatingService movieRatingService;
+
+    public MovieResource(MovieService movieService,MovieRatingService movieRatingService){
         this.movieService = movieService;
+        this.movieRatingService = movieRatingService;
     }
 
     /**
@@ -44,11 +49,11 @@ public class MovieResource {
     @Timed
     public ResponseEntity<List<MovieDTO>> getAllMovie() {
         log.debug("REST request to get all Movies ");
-        List<MovieDTO> movies = movieService.findAll();
-        if(movies !=null && movies.size() > 0){
-            return new ResponseEntity<>(movies, HttpStatus.OK);
+        List<MovieDTO> result = movieService.findAll();
+        if(result !=null && result.size() > 0){
+            return new ResponseEntity<>(result, HttpStatus.OK);
         }else{
-            return new ResponseEntity<>(movies, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
     }
 
@@ -61,9 +66,26 @@ public class MovieResource {
     @Timed
     public ResponseEntity<MovieDetailDTO> getMovieDetail(@PathVariable Long id) {
         log.debug("REST request to get Movie detail {}",id);
-        MovieDetailDTO movieDetailDTO = movieService.findDetail(id);
-        if (movieDetailDTO != null) {
-            return new ResponseEntity<>(movieDetailDTO, HttpStatus.OK);
+        MovieDetailDTO result = movieService.findDetail(id);
+        if (result != null) {
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+    }
+
+    /**
+     * GET  /movies/{id}/ratings : get movie ratings.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of movie ratings in body
+     */
+    @GetMapping("/movies/{id}/ratings")
+    @Timed
+    public ResponseEntity<List<MovieRatingDTO>> getMovieRatings(@PathVariable Long id) {
+        log.debug("REST request to get Movie Rating by movie id {}",id);
+        List<MovieRatingDTO> result = movieRatingService.findByMovieId(id);
+        if (result != null) {
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
