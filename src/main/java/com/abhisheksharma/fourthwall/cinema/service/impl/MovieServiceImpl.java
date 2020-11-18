@@ -1,24 +1,24 @@
 package com.abhisheksharma.fourthwall.cinema.service.impl;
 
 
-import com.abhisheksharma.fourthwall.cinema.config.ApplicationProperties;
 import com.abhisheksharma.fourthwall.cinema.domain.Movie;
+import com.abhisheksharma.fourthwall.cinema.domain.OMDBData;
 import com.abhisheksharma.fourthwall.cinema.repository.MovieRepository;
+import com.abhisheksharma.fourthwall.cinema.repository.OMDBDataRepository;
+import com.abhisheksharma.fourthwall.cinema.security.AuthoritiesConstants;
+import com.abhisheksharma.fourthwall.cinema.security.SecurityUtils;
 import com.abhisheksharma.fourthwall.cinema.service.MovieService;
-import com.abhisheksharma.fourthwall.cinema.service.dto.Message;
-import com.abhisheksharma.fourthwall.cinema.service.dto.MovieDTO;
-import com.abhisheksharma.fourthwall.cinema.service.dto.OMDBData;
+import com.abhisheksharma.fourthwall.cinema.service.dto.*;
 import com.abhisheksharma.fourthwall.cinema.service.mapper.MovieMapper;
+import com.abhisheksharma.fourthwall.cinema.service.mapper.ViewMovieMapper;
+import com.abhisheksharma.fourthwall.cinema.service.util.ExternalDataUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,20 +32,24 @@ public class MovieServiceImpl implements MovieService {
 
     private final Logger log = LoggerFactory.getLogger(FranchiseServiceImpl.class);
 
-    private final ApplicationProperties applicationProperties;
-
     private final MovieRepository movieRepository;
 
     private final MovieMapper movieMapper;
 
-    private final RestTemplate restTemplate;
+    private final ViewMovieMapper viewMovieMapper;
 
-    public MovieServiceImpl(ApplicationProperties applicationProperties,
-                            MovieRepository movieRepository,RestTemplate restTemplate,MovieMapper movieMapper){
-        this.applicationProperties = applicationProperties;
+    private final ExternalDataUtil externalDataUtil;
+
+    private final OMDBDataRepository omdbDataRepository;
+
+
+    public MovieServiceImpl(MovieRepository movieRepository,MovieMapper movieMapper, ViewMovieMapper viewMovieMapper,ExternalDataUtil externalDataUtil,
+                            OMDBDataRepository omdbDataRepository){
         this.movieRepository = movieRepository;
-        this.restTemplate = restTemplate;
         this.movieMapper = movieMapper;
+        this.viewMovieMapper = viewMovieMapper;
+        this.externalDataUtil = externalDataUtil;
+        this.omdbDataRepository = omdbDataRepository;
     }
 
 
@@ -58,6 +62,8 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public MovieDTO save(MovieDTO movieDTO) {
         log.debug("Request to save Movie : {}", movieDTO);
+
+
 
         MovieDTO result = null;
         return result;
@@ -72,9 +78,44 @@ public class MovieServiceImpl implements MovieService {
     @Transactional(readOnly = true)
     public List<MovieDTO> findAll() {
         log.debug("Request to get all Movies");
-        return movieRepository.findAll().stream()
-                .map(movieMapper::toDto)
-                .collect(Collectors.toCollection(LinkedList::new));
+        if (SecurityUtils.getAuthority().get().equals(AuthoritiesConstants.ADMIN)) {
+            return movieRepository.findAll().stream()
+                    .map(movieMapper::toDto)
+                    .collect(Collectors.toCollection(LinkedList::new));
+        } else {
+            return movieRepository.findByActive(true).stream()
+                    .map(viewMovieMapper::toDto)
+                    .collect(Collectors.toCollection(LinkedList::new));
+        }
+    }
+
+    @Override
+    public MovieDetailDTO findDetail(Long id) {
+        log.debug("Request to get Movie Detail : {}", id);
+        Movie movie = movieRepository.getOne(id);
+
+        MovieDetailDTO movieDetailDTO = null;
+
+        if(movie != null) {
+            movieDetailDTO = new MovieDetailDTO(movie.getId(),movie.getName(),movie.getDescription(),movie.getStar());
+            OMDBDataDTO omdbDataDTO = externalDataUtil.getOMDBData(movie.getImdbId());
+            if(omdbDataDTO == null) {
+                OMDBData omdbData = omdbDataRepository.findByImdbId(movie.getImdbId());
+                if(omdbData != null && omdbData.getImdbData() != null) {
+                    ObjectMapper mapper = new ObjectMapper();
+                    try {
+                        omdbDataDTO = mapper.readValue(omdbData.getImdbData(),OMDBDataDTO.class);
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            if(omdbDataDTO != null) {
+                movieDetailDTO.setImdbRating(omdbDataDTO.getImdbRating());
+                movieDetailDTO.setReleasedDate(omdbDataDTO.getReleased());
+            }
+        }
+        return movieDetailDTO;
     }
 
 }

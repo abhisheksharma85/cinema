@@ -98,4 +98,16 @@ public final class SecurityUtils {
                     return null;
                 });
     }
+
+    /**
+     * Get the user role of the current user.
+     *
+     * @return the user role of the current user.
+     */
+
+    public static Optional<String> getAuthority(){
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        return Optional.ofNullable(securityContext.getAuthentication())
+                .map(authentication -> authentication.getAuthorities().stream().findFirst().toString());
+    }
 }

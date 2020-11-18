@@ -9,16 +9,21 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.time.Duration;
 
 @Configuration
 public class RestTemplateConfig {
 
     @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder builder) throws NoSuchAlgorithmException, KeyManagementException {
-
+    public RestTemplate restTemplate(RestTemplateBuilder builder){
         CloseableHttpClient httpClient = HttpClients.custom().build();
         HttpComponentsClientHttpRequestFactory customRequestFactory = new HttpComponentsClientHttpRequestFactory();
         customRequestFactory.setHttpClient(httpClient);
-        return builder.requestFactory(() -> customRequestFactory).build();
+        return builder.requestFactory(() -> customRequestFactory)
+                .setConnectTimeout(Duration.ofMillis(3000))
+                .setReadTimeout(Duration.ofMillis(3000)).build();
     }
+
+
+
 }

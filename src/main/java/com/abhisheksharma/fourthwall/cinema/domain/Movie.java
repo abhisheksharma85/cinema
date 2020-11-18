@@ -23,10 +23,11 @@ public class Movie implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "franchise_id", nullable = false)
     private Integer franchiseId;
-
-    private Instant releasedDate;
 
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
@@ -52,12 +53,12 @@ public class Movie implements Serializable {
 
     public Movie(){}
 
-    public Movie(Long id, @NotNull String name, Integer franchiseId, Instant releasedDate, Instant createdAt, Instant updatedAt, Long createdBy,
+    public Movie(Long id, @NotNull String name,String description, Integer franchiseId, Instant createdAt, Instant updatedAt, Long createdBy,
                  Long updatedBy, @NotNull Boolean active, String imdbId,Float star) {
         this.id = id;
         this.name = name;
+        this.description = description;
         this.franchiseId = franchiseId;
-        this.releasedDate = releasedDate;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.createdBy = createdBy;
@@ -83,6 +84,10 @@ public class Movie implements Serializable {
         this.name = name;
     }
 
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) { this.description = description; }
+
     public Integer getFranchiseId() {
         return franchiseId;
     }
@@ -91,13 +96,6 @@ public class Movie implements Serializable {
         this.franchiseId = franchiseId;
     }
 
-    public Instant getReleasedDate() {
-        return releasedDate;
-    }
-
-    public void setReleasedDate(Instant releasedDate) {
-        this.releasedDate = releasedDate;
-    }
 
     public Instant getCreatedAt() {
         return createdAt;
@@ -177,7 +175,6 @@ public class Movie implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", franchiseId=" + franchiseId +
-                ", releasedDate=" + releasedDate +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", createdBy=" + createdBy +

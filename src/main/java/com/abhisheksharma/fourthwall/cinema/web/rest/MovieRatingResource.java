@@ -48,4 +48,6 @@ public class MovieRatingResource {
                 .body(result);
     }
 
+
+
 }

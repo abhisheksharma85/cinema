@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class OMDBData {
+public class OMDBDataDTO {
 
     @JsonProperty("Title")
     private String title;
@@ -55,7 +55,7 @@ public class OMDBData {
     private String metascore;
 
     @JsonProperty("imdbRating")
-    private String imdbRating;
+    private Float imdbRating;
 
     @JsonProperty("imdbVotes")
     private String imdbVotes;
@@ -82,11 +82,11 @@ public class OMDBData {
     private String response;
 
 
-    public OMDBData() { }
+    public OMDBDataDTO() { }
 
-    public OMDBData(String title, String year, String rated, String released, String runtime, String genre, String director, String writer, String actors, String plot,
-                    String language, String country, String awards, String poster, List<OMDBRating> ratings, String metascore, String imdbRating, String imdbVotes,
-                    String imdbId, String type, String dvd, String boxOffice, String production, String website, String response) {
+    public OMDBDataDTO(String title, String year, String rated, String released, String runtime, String genre, String director, String writer, String actors, String plot,
+                       String language, String country, String awards, String poster, List<OMDBRating> ratings, String metascore, Float imdbRating, String imdbVotes,
+                       String imdbId, String type, String dvd, String boxOffice, String production, String website, String response) {
         this.title = title;
         this.year = year;
         this.rated = rated;
@@ -242,11 +242,11 @@ public class OMDBData {
         this.metascore = metascore;
     }
 
-    public String getImdbRating() {
+    public Float getImdbRating() {
         return imdbRating;
     }
 
-    public void setImdbRating(String imdbRating) {
+    public void setImdbRating(Float imdbRating) {
         this.imdbRating = imdbRating;
     }
 
