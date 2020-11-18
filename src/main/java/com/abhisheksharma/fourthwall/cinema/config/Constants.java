@@ -23,4 +23,7 @@ public  class Constants {
         public static final String  ANDROID  =   "android";
         public static final String  IOS      =   "ios";
     }
+
+    public static final String TIME_FORMAT      =   "HH:mm";
+    public static final String US_DATE_FORMAT   =   "MM-dd-yyyy";
 }

@@ -1,8 +1,6 @@
 package com.abhisheksharma.fourthwall.cinema.service;
 
-import com.abhisheksharma.fourthwall.cinema.service.dto.FranchiseDTO;
-import com.abhisheksharma.fourthwall.cinema.service.dto.MovieDTO;
-import com.abhisheksharma.fourthwall.cinema.service.dto.MovieDetailDTO;
+import com.abhisheksharma.fourthwall.cinema.service.dto.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +33,21 @@ public interface MovieService {
      */
     MovieDetailDTO findDetail(Long id);
 
+    /**
+     * Get the "id" movie.
+     *
+     * @param id the id of the entity
+     * @return the entity
+     */
+    List<MovieShowDateDTO> findMovieDate(Long id);
+
+    /**
+     *
+     * @param id
+     * @param showDateId
+     * @return
+     */
+    MovieShowTimeDTO findMovieTime(Long id, Long showDateId);
 
 
 }

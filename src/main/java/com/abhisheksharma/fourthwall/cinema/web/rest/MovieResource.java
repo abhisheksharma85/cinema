@@ -4,9 +4,7 @@ package com.abhisheksharma.fourthwall.cinema.web.rest;
 
 import com.abhisheksharma.fourthwall.cinema.service.MovieRatingService;
 import com.abhisheksharma.fourthwall.cinema.service.MovieService;
-import com.abhisheksharma.fourthwall.cinema.service.dto.MovieDTO;
-import com.abhisheksharma.fourthwall.cinema.service.dto.MovieDetailDTO;
-import com.abhisheksharma.fourthwall.cinema.service.dto.MovieRatingDTO;
+import com.abhisheksharma.fourthwall.cinema.service.dto.*;
 import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,6 +65,7 @@ public class MovieResource {
     public ResponseEntity<MovieDetailDTO> getMovieDetail(@PathVariable Long id) {
         log.debug("REST request to get Movie detail {}",id);
         MovieDetailDTO result = movieService.findDetail(id);
+        movieService.findMovieDate(id);
         if (result != null) {
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
@@ -90,6 +89,41 @@ public class MovieResource {
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
     }
+
+    /**
+     * GET  /movies/{id}/show-date : get movie show-date.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of movie show date in body
+     */
+    @GetMapping("/movies/{id}/show-date")
+    @Timed
+    public ResponseEntity<List<MovieShowDateDTO>> getMovieShowDate(@PathVariable Long id) {
+        log.debug("REST request to get Movie Show Date by movie id {}",id);
+        List<MovieShowDateDTO> result = movieService.findMovieDate(id);
+        if (result != null) {
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+    }
+
+    /**
+     * GET  /movies/{id}/show-date/{showDateId}/show-timing : get movie show-date.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of movie show date in body
+     */
+    @GetMapping("/movies/{id}/show-date/{showDateId}/show-timing")
+    @Timed
+    public ResponseEntity<MovieShowTimeDTO> getMovieShowTime(@PathVariable Long id, @PathVariable Long showDateId) {
+        log.debug("REST request to get Movie Show Date by movie id and show-date id {},{}",id,showDateId);
+        MovieShowTimeDTO result = movieService.findMovieTime(id,showDateId);
+        if (result != null) {
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+    }
+
 
 
 

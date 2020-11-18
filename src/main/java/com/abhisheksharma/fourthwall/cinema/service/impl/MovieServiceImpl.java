@@ -2,8 +2,12 @@ package com.abhisheksharma.fourthwall.cinema.service.impl;
 
 
 import com.abhisheksharma.fourthwall.cinema.domain.Movie;
+import com.abhisheksharma.fourthwall.cinema.domain.MovieShowDate;
+import com.abhisheksharma.fourthwall.cinema.domain.MovieShowTime;
 import com.abhisheksharma.fourthwall.cinema.domain.OMDBData;
 import com.abhisheksharma.fourthwall.cinema.repository.MovieRepository;
+import com.abhisheksharma.fourthwall.cinema.repository.MovieShowDateRepository;
+import com.abhisheksharma.fourthwall.cinema.repository.MovieShowTimeRepository;
 import com.abhisheksharma.fourthwall.cinema.repository.OMDBDataRepository;
 import com.abhisheksharma.fourthwall.cinema.security.AuthoritiesConstants;
 import com.abhisheksharma.fourthwall.cinema.security.SecurityUtils;
@@ -12,6 +16,7 @@ import com.abhisheksharma.fourthwall.cinema.service.dto.*;
 import com.abhisheksharma.fourthwall.cinema.service.mapper.MovieMapper;
 import com.abhisheksharma.fourthwall.cinema.service.mapper.ViewMovieMapper;
 import com.abhisheksharma.fourthwall.cinema.service.util.ExternalDataUtil;
+import com.abhisheksharma.fourthwall.cinema.service.util.HelperUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -19,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,14 +48,20 @@ public class MovieServiceImpl implements MovieService {
 
     private final OMDBDataRepository omdbDataRepository;
 
+    private final MovieShowDateRepository movieShowDateRepository;
+
+    private final MovieShowTimeRepository movieShowTimeRepository;
+
 
     public MovieServiceImpl(MovieRepository movieRepository,MovieMapper movieMapper, ViewMovieMapper viewMovieMapper,ExternalDataUtil externalDataUtil,
-                            OMDBDataRepository omdbDataRepository){
+                            OMDBDataRepository omdbDataRepository,MovieShowDateRepository movieShowDateRepository,MovieShowTimeRepository movieShowTimeRepository){
         this.movieRepository = movieRepository;
         this.movieMapper = movieMapper;
         this.viewMovieMapper = viewMovieMapper;
         this.externalDataUtil = externalDataUtil;
         this.omdbDataRepository = omdbDataRepository;
+        this.movieShowDateRepository = movieShowDateRepository;
+        this.movieShowTimeRepository = movieShowTimeRepository;
     }
 
 
@@ -117,5 +129,31 @@ public class MovieServiceImpl implements MovieService {
         }
         return movieDetailDTO;
     }
+
+    @Override
+    public List<MovieShowDateDTO> findMovieDate(Long id) {
+        log.debug("Request to get Movie Show Date : {}", id);
+        List<MovieShowDate> movieShowDates = movieShowDateRepository.findByMovieId(id);
+        List<MovieShowDateDTO> result = null;
+        if(movieShowDates != null){
+            result = new ArrayList<>(movieShowDates.size());
+            for(MovieShowDate showDate : movieShowDates){
+                result.add(new MovieShowDateDTO(showDate));
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public MovieShowTimeDTO findMovieTime(Long id, Long showDateId) {
+        log.debug("Request to get Movie Show Time : {}", id);
+        List<MovieShowTime> movieShowTimes = movieShowTimeRepository.findByMovieIdAndShowDate(id,showDateId);
+        MovieShowTimeDTO result = new MovieShowTimeDTO(id,showDateId);
+        if(movieShowTimes != null){
+            result.setTimings(movieShowTimes);
+        }
+        return result;
+    }
+
 
 }
