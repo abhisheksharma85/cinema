@@ -5,6 +5,7 @@ import com.abhisheksharma.fourthwall.cinema.domain.User;
 import com.abhisheksharma.fourthwall.cinema.repository.AuthorityRepository;
 import com.abhisheksharma.fourthwall.cinema.repository.UserRepository;
 import com.abhisheksharma.fourthwall.cinema.security.AuthoritiesConstants;
+import com.abhisheksharma.fourthwall.cinema.security.RandomUtil;
 import com.abhisheksharma.fourthwall.cinema.service.UserService;
 import com.abhisheksharma.fourthwall.cinema.service.dto.UserDTO;
 import com.abhisheksharma.fourthwall.cinema.service.error.EmailAlreadyUsedException;
@@ -68,7 +69,7 @@ public class UserServiceImpl implements UserService {
         // new user is not active
         newUser.setActivated(false);
         // new user gets registration key
-        newUser.setActivationKey(UUID.randomUUID().toString());
+        newUser.setActivationKey(RandomUtil.generateActivationKey());
         Set<Authority> authorities = new HashSet<>();
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
         newUser.setAuthorities(authorities);

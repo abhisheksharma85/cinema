@@ -1,5 +1,6 @@
 package com.abhisheksharma.fourthwall.cinema.config;
 
+import com.abhisheksharma.fourthwall.cinema.security.AuthoritiesConstants;
 import com.abhisheksharma.fourthwall.cinema.security.jwt.JWTConfigurer;
 import com.abhisheksharma.fourthwall.cinema.security.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
@@ -41,10 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers(HttpMethod.OPTIONS, "/**")
                 .antMatchers("/app/**/*.{js,html}")
-                .antMatchers("/i18n/**")
-                .antMatchers("/content/**")
-                .antMatchers("/swagger-ui/index.html")
-                .antMatchers("/test/**");
+                .antMatchers("/swagger-ui/index.html");
     }
 
     @Override
@@ -70,8 +68,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/authenticate").permitAll()
-                .antMatchers("/api/**").permitAll()
                 .antMatchers("/api/health/**").permitAll()
+                .antMatchers("/api/manage/**").hasAnyAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/api/**").authenticated()
                 .and()
                 .apply(securityConfigurerAdapter());
     }
