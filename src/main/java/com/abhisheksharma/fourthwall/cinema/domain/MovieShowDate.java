@@ -33,7 +33,13 @@ public class MovieShowDate implements Serializable {
 
     public MovieShowDate(){}
 
-    public MovieShowDate(Long id, @NotNull Long movieId, @NotNull LocalDate showDate, @NotNull Boolean active) {
+    public MovieShowDate(Long movieId, LocalDate showDate) {
+        this.movieId = movieId;
+        this.showDate = showDate;
+        this.active = Boolean.TRUE;
+    }
+
+    public MovieShowDate(Long id, Long movieId, LocalDate showDate, Boolean active) {
         this.id = id;
         this.movieId = movieId;
         this.showDate = showDate;

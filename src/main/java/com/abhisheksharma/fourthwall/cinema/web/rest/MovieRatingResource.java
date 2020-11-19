@@ -23,7 +23,7 @@ import java.net.URISyntaxException;
 @RequestMapping("/api")
 public class MovieRatingResource {
 
-    private final Logger log = LoggerFactory.getLogger(MovieResource.class);
+    private final Logger log = LoggerFactory.getLogger(MovieRatingResource.class);
 
     private static final String ENTITY_NAME = "movie-rating";
 

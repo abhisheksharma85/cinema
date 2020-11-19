@@ -3,7 +3,7 @@ package com.abhisheksharma.fourthwall.cinema.service;
 import com.abhisheksharma.fourthwall.cinema.service.dto.*;
 
 import java.util.List;
-import java.util.Optional;
+
 
 /**
  * Service Interface for managing Movie.

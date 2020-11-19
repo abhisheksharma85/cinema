@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class MoviePriceResource {
 
-    private final Logger log = LoggerFactory.getLogger(MovieResource.class);
+    private final Logger log = LoggerFactory.getLogger(MoviePriceResource.class);
 
     private static final String ENTITY_NAME = "movie-price";
 

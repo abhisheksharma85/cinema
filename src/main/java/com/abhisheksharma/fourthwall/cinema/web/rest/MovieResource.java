@@ -6,7 +6,6 @@ import com.abhisheksharma.fourthwall.cinema.service.MoviePriceService;
 import com.abhisheksharma.fourthwall.cinema.service.MovieRatingService;
 import com.abhisheksharma.fourthwall.cinema.service.MovieService;
 import com.abhisheksharma.fourthwall.cinema.service.dto.*;
-import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -48,7 +47,6 @@ public class MovieResource {
      * @return the ResponseEntity with status 200 (OK) and the list of movies in body
      */
     @GetMapping("/movies")
-    @Timed
     public ResponseEntity<List<MovieDTO>> getAllMovie() {
         log.debug("REST request to get all Movies ");
         List<MovieDTO> result = movieService.findAll();
@@ -65,7 +63,6 @@ public class MovieResource {
      * @return the ResponseEntity with status 200 (OK) and the detail of movie in body
      */
     @GetMapping("/movies/{id}")
-    @Timed
     public ResponseEntity<MovieDetailDTO> getMovieDetail(@PathVariable Long id) {
         log.debug("REST request to get Movie detail {}",id);
         MovieDetailDTO result = movieService.findDetail(id);
@@ -83,7 +80,6 @@ public class MovieResource {
      * @return the ResponseEntity with status 200 (OK) and the list of movie ratings in body
      */
     @GetMapping("/movies/{id}/ratings")
-    @Timed
     public ResponseEntity<List<MovieRatingDTO>> getMovieRatings(@PathVariable Long id) {
         log.debug("REST request to get Movie Rating by movie id {}",id);
         List<MovieRatingDTO> result = movieRatingService.findByMovieId(id);
@@ -100,7 +96,6 @@ public class MovieResource {
      * @return the ResponseEntity with status 200 (OK) and the list of movie show date in body
      */
     @GetMapping("/movies/{id}/show-date")
-    @Timed
     public ResponseEntity<List<MovieShowDateDTO>> getMovieShowDate(@PathVariable Long id) {
         log.debug("REST request to get Movie Show Date by movie id {}",id);
         List<MovieShowDateDTO> result = movieService.findMovieDate(id);
@@ -117,7 +112,6 @@ public class MovieResource {
      * @return the ResponseEntity with status 200 (OK) and the list of movie show date in body
      */
     @GetMapping("/movies/{id}/show-date/{showDateId}/show-time")
-    @Timed
     public ResponseEntity<MovieShowTimeDTO> getMovieShowTime(@PathVariable Long id, @PathVariable Long showDateId) {
         log.debug("REST request to get Movie Show Date by movie id and show-date id {},{}",id,showDateId);
         MovieShowTimeDTO result = movieService.findMovieTime(id,showDateId);
@@ -134,7 +128,6 @@ public class MovieResource {
      * @return the ResponseEntity with status 200 (OK) and the list of movie show time price in body
      */
     @GetMapping("/movies/{id}/show-time/{showTimeId}/prices")
-    @Timed
     public ResponseEntity<MovieShowPriceDTO> getMoviePrice(@PathVariable Long id, @PathVariable Long showTimeId) {
         log.debug("REST request to get Movie Show Price by movie id, show-time id{}",id,showTimeId);
 

@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class MovieServiceImpl implements MovieService {
 
-    private final Logger log = LoggerFactory.getLogger(FranchiseServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(MovieServiceImpl.class);
 
     private final MovieRepository movieRepository;
 
@@ -74,6 +74,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public MovieDTO save(MovieDTO movieDTO) {
         log.debug("Request to save Movie : {}", movieDTO);
+
 
 
 

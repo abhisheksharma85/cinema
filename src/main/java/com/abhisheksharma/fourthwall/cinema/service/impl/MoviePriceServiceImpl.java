@@ -28,7 +28,7 @@ import java.util.Map;
 @Transactional
 public class MoviePriceServiceImpl implements MoviePriceService {
 
-    private final Logger log = LoggerFactory.getLogger(FranchiseServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(MoviePriceServiceImpl.class);
 
     private final MoviePriceRepository moviePriceRepository;
 

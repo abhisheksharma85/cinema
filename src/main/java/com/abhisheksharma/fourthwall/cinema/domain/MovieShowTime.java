@@ -36,7 +36,14 @@ public class MovieShowTime implements Serializable {
 
     public MovieShowTime(){}
 
-    public MovieShowTime(Long id, @NotNull Long movieId, @NotNull LocalTime showTime, MovieShowDate movieShowDate, @NotNull Boolean active) {
+    public MovieShowTime(Long movieId, LocalTime showTime, MovieShowDate movieShowDate) {
+        this.movieId = movieId;
+        this.showTime = showTime;
+        this.movieShowDate = movieShowDate;
+        this.active = Boolean.TRUE;
+    }
+
+    public MovieShowTime(Long id, Long movieId, LocalTime showTime, MovieShowDate movieShowDate, Boolean active) {
         this.id = id;
         this.movieId = movieId;
         this.showTime = showTime;
