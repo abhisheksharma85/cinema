@@ -2,6 +2,7 @@ package com.abhisheksharma.fourthwall.cinema.web.rest;
 
 
 
+import com.abhisheksharma.fourthwall.cinema.service.MoviePriceService;
 import com.abhisheksharma.fourthwall.cinema.service.MovieRatingService;
 import com.abhisheksharma.fourthwall.cinema.service.MovieService;
 import com.abhisheksharma.fourthwall.cinema.service.dto.*;
@@ -33,9 +34,12 @@ public class MovieResource {
 
     private final MovieRatingService movieRatingService;
 
-    public MovieResource(MovieService movieService,MovieRatingService movieRatingService){
+    private final MoviePriceService moviePriceService;
+
+    public MovieResource(MovieService movieService,MovieRatingService movieRatingService,MoviePriceService moviePriceService){
         this.movieService = movieService;
         this.movieRatingService = movieRatingService;
+        this.moviePriceService = moviePriceService;
     }
 
     /**
@@ -112,11 +116,29 @@ public class MovieResource {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of movie show date in body
      */
-    @GetMapping("/movies/{id}/show-date/{showDateId}/show-timing")
+    @GetMapping("/movies/{id}/show-date/{showDateId}/show-time")
     @Timed
     public ResponseEntity<MovieShowTimeDTO> getMovieShowTime(@PathVariable Long id, @PathVariable Long showDateId) {
         log.debug("REST request to get Movie Show Date by movie id and show-date id {},{}",id,showDateId);
         MovieShowTimeDTO result = movieService.findMovieTime(id,showDateId);
+        if (result != null) {
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+    }
+
+    /**
+     * GET  /movies/{id}/show-timing/{showTimeId}/prices : get movie show-date.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of movie show time price in body
+     */
+    @GetMapping("/movies/{id}/show-time/{showTimeId}/prices")
+    @Timed
+    public ResponseEntity<MovieShowPriceDTO> getMoviePrice(@PathVariable Long id, @PathVariable Long showTimeId) {
+        log.debug("REST request to get Movie Show Price by movie id, show-time id{}",id,showTimeId);
+
+        MovieShowPriceDTO result = moviePriceService.findMoviePrice(showTimeId);
         if (result != null) {
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {

@@ -12,7 +12,7 @@ public class MovieShowTimeDTO {
 
     private Long movieId;
 
-    private List<Timing> timings;
+    private List<Timing> time;
 
     public MovieShowTimeDTO(){}
 
@@ -29,14 +29,14 @@ public class MovieShowTimeDTO {
 
     public void setMovieId(Long movieId) { this.movieId = movieId; }
 
-    public List<Timing> getTimings() { return timings; }
+    public List<Timing> getTime() { return time; }
 
-    public void setTimings(List<MovieShowTime> timings) {
-        List<Timing> _temp = new ArrayList<>(timings.size());
-        for(MovieShowTime showTime: timings){
+    public void setTimings(List<MovieShowTime> time) {
+        List<Timing> _temp = new ArrayList<>(time.size());
+        for(MovieShowTime showTime: time){
             _temp.add(new Timing(showTime.getId(), showTime.getShowTime().format(HelperUtil.getTimeFormat())));
         }
-        this.timings = _temp;
+        this.time = _temp;
     }
 
     private class Timing{
