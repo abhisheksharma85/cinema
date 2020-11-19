@@ -46,6 +46,15 @@ public class MoviePrice implements Serializable {
 
     public MoviePrice(){}
 
+    public MoviePrice(MovieShowTime showTime, PriceType priceType, Float price, Long createdBy){
+        this.showTime = showTime;
+        this.priceType = priceType;
+        this.price = price;
+        this.createdBy = createdBy;
+        this.createdAt = Instant.now();
+        this.active = Boolean.TRUE;
+    }
+
     public MoviePrice(Long id, MovieShowTime showTime, PriceType priceType, Float price, Instant createdAt, Instant updatedAt, Long createdBy, Long updatedBy, Boolean active) {
         this.id = id;
         this.showTime = showTime;
