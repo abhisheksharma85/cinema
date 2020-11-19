@@ -1,4 +1,4 @@
-package com.abhisheksharma.fourthwall.cinema.service;
+package com.abhisheksharma.fourthwall.cinema.service.dto;
 
 public class DeviceDTO {
 

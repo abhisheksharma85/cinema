@@ -1,7 +1,5 @@
 package com.abhisheksharma.fourthwall.cinema.service.dto;
 
-import com.abhisheksharma.fourthwall.cinema.service.DeviceDTO;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
