@@ -35,14 +35,14 @@ public class FranchiseResource {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of franchises in body
      */
-    @GetMapping("/franchises")
+    @GetMapping("/manage/franchises")
     @Timed
     public ResponseEntity<List<FranchiseDTO>> getAllFranchise() {
         log.debug("REST request to get all Franchises ");
         List<FranchiseDTO> franchises = franchiseService.findAll();
-        if(franchises !=null && franchises.size() > 0){
+        if (franchises !=null && franchises.size() > 0) {
             return new ResponseEntity<>(franchises, HttpStatus.OK);
-        }else{
+        } else {
             return new ResponseEntity<>(franchises, HttpStatus.NO_CONTENT);
         }
     }
